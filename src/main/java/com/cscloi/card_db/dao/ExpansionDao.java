@@ -1,8 +1,6 @@
 package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.Expansion;
-import com.cscloi.card_db.entity.Game;
-import com.cscloi.card_db.entity.User;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -39,7 +37,7 @@ public interface ExpansionDao {
      * @param input The new expansion.
      * @return The new expansion if successful, otherwise returns an empty optional.
      */
-    Optional<Expansion> save(User input);
+    Optional<Expansion> save(Expansion input);
 
     /**
      * Creates a new expansion.
@@ -48,7 +46,7 @@ public interface ExpansionDao {
      * @param input  The new expansion.
      * @return The new expansion if successful, otherwise returns an empty optional.
      */
-    Optional<Expansion> save(String expansionID, User input);
+    Optional<Expansion> save(String expansionID, Expansion input);
 
     /**
      * Deletes or removes a expansion.

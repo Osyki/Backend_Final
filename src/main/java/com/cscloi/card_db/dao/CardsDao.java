@@ -1,8 +1,6 @@
 package com.cscloi.card_db.dao;
 
-import com.cscloi.card_db.entity.Deck;
-import com.cscloi.card_db.entity.Game;
-import com.cscloi.card_db.entity.User;
+import com.cscloi.card_db.entity.Card;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -16,7 +14,7 @@ public interface CardsDao {
      * @param limit The maximum number of cards to return.
      * @return A list of all the cards.
      */
-    Stream<Game> all(int limit);
+    Stream<Card> all(int limit);
 
     /**
      * Returns all cards owned by a user.
@@ -25,7 +23,7 @@ public interface CardsDao {
      * @param deckID The user that owns the decks
      * @return A list of all the users.
      */
-    Stream<Deck> all_for_a_user(int limit, String deckID);
+    Stream<Card> all_for_a_deck(int limit, String deckID);
 
     /**
      * Gets a card by it's unique identifier.
@@ -33,7 +31,7 @@ public interface CardsDao {
      * @param cardID The unique identifier
      * @return The card if found, otherwise returns null.
      */
-    Optional<Deck> get(String cardID);
+    Optional<Card> get(String cardID);
 
     /**
      * Creates a new card.
@@ -41,7 +39,7 @@ public interface CardsDao {
      * @param input The new card.
      * @return The new card if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> save(User input);
+    Optional<Card> save(Card input);
 
     /**
      * Creates a new card.
@@ -50,7 +48,7 @@ public interface CardsDao {
      * @param input  The new card.
      * @return The new card if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> save(String cardID, User input);
+    Optional<Card> save(String cardID, Card input);
 
     /**
      * Deletes or removes a card.
@@ -58,5 +56,5 @@ public interface CardsDao {
      * @param cardID The unique id of the card to remove.
      * @return The removed card if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> delete(String cardID);
+    Optional<Card> delete(String cardID);
 }

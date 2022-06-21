@@ -40,7 +40,7 @@ public interface CardsService {
      * @param input The new card.
      * @return The new card if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> create(User input);
+    Optional<Deck> create(Deck input);
 
     /**
      * Updates a card.
@@ -49,7 +49,7 @@ public interface CardsService {
      * @param input  The updated card.
      * @return The updated card if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> update(String cardID, User input);
+    Optional<Deck> update(String cardID, Deck input);
 
     /**
      * Deletes or removes a card.

@@ -37,7 +37,7 @@ public interface DeckService {
      * @param input The new deck.
      * @return The new deck if successful, otherwise returns an empty optional.
      */
-    Deck create(User input);
+    Deck create(Deck input);
 
     /**
      * Updates a deck.
@@ -46,7 +46,7 @@ public interface DeckService {
      * @param input  The updated deck.
      * @return The updated deck if successful, otherwise returns an empty optional.
      */
-    Deck update(String deckID, User input);
+    Deck update(String deckID, Deck input);
 
     /**
      * Deletes or removes a deck.

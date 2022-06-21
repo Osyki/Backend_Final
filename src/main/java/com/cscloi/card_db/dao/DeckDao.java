@@ -2,7 +2,6 @@ package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.Deck;
 import com.cscloi.card_db.entity.Game;
-import com.cscloi.card_db.entity.User;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -39,7 +38,7 @@ public interface DeckDao {
      * @param input The new deck.
      * @return The new deck if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> save(User input);
+    Optional<Deck> save(Deck input);
 
     /**
      * Creates a new deck.
@@ -48,7 +47,7 @@ public interface DeckDao {
      * @param input  The new deck.
      * @return The new user if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> save(String deckID, User input);
+    Optional<Deck> save(String deckID, Deck input);
 
     /**
      * Deletes or removes a deck.

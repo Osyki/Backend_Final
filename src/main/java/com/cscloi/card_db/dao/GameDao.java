@@ -1,7 +1,6 @@
 package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.Game;
-import com.cscloi.card_db.entity.User;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -23,7 +22,7 @@ public interface GameDao {
      * @param user_ID ID of user who owns the games.
      * @return A list of all the games.
      */
-    Stream<Game> all_of_a_User(int limit, String user_ID);
+    Stream<Game> all_of_a_User(int limit, String userID);
 
     /**
      * Gets a game by it's unique identifier.
@@ -39,7 +38,7 @@ public interface GameDao {
      * @param input The new game.
      * @return The new game if successful, otherwise returns an empty optional.
      */
-    Optional<Game> save(User input);
+    Optional<Game> save(Game input);
 
     /**
      * Creates a new game.
@@ -48,7 +47,7 @@ public interface GameDao {
      * @param input  The new game.
      * @return The new game if successful, otherwise returns an empty optional.
      */
-    Optional<Game> save(String gameID, User input);
+    Optional<Game> save(String gameID, Game input);
 
     /**
      * Deletes or removes a game.

@@ -37,7 +37,7 @@ public interface ExpansionService {
      * @param input The new expansion.
      * @return The new expansion if successful, otherwise returns an empty optional.
      */
-    Expansion create(User input);
+    Expansion create(Expansion input);
 
     /**
      * Updates an expansion.
@@ -46,7 +46,7 @@ public interface ExpansionService {
      * @param input       The updated expansion.
      * @return The new expansion if successful, otherwise returns an empty optional.
      */
-    Expansion update(String expansionID, User input);
+    Expansion update(String expansionID, Expansion input);
 
     /**
      * Deletes or removes a expansion.

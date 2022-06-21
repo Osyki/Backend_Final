@@ -37,7 +37,7 @@ public interface GameService {
      * @param input The new game.
      * @return The new game if successful, otherwise returns an empty optional.
      */
-    Game create(User input);
+    Game create(Game input);
 
     /**
      * Updates a game.
@@ -46,7 +46,7 @@ public interface GameService {
      * @param input  The updated game.
      * @return The updated game if successful, otherwise returns an empty optional.
      */
-    Game update(String gameID, User input);
+    Game update(String gameID, Game input);
 
     /**
      * Deletes or removes a game.
