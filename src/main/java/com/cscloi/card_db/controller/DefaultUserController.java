@@ -1,13 +1,9 @@
+//Keith Geneva
 package com.cscloi.card_db.controller;
-
 
 import com.cscloi.card_db.entity.User;
 import com.cscloi.card_db.service.UserService;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.servers.Server;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@OpenAPIDefinition(info = @Info(title = "User Service"), servers = {@Server(url = "http://localhost:8080", description = "Local server.")})
-@Tag(name = "Users")
 @Slf4j
-public class DefaultUserController implements UserController{
+public class DefaultUserController implements UserController {
     private final int MAX_ITEMS_PER_REQUEST = 500;
 
     //@Autowired
