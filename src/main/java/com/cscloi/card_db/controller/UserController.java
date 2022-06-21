@@ -1,4 +1,13 @@
 package com.cscloi.card_db.controller;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
+
+import org.springframework.web.bind.annotation.*;
+
+@RequestMapping("/users")
+@OpenAPIDefinition(info = @Info(title = "User Service"), servers = {@Server(url = "http://localhost:8080", description = "Local server.")})
 public interface UserController {
+
 }
