@@ -4,6 +4,7 @@ package com.cscloi.card_db.service;
 import com.cscloi.card_db.dao.UserDao;
 import com.cscloi.card_db.entity.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DefaultUserService implements UserService {
 
-    //@Autowired
+    @Autowired
     private UserDao dao;
 
     @Override

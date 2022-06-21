@@ -1,7 +1,7 @@
+//Keith Geneva
 package com.cscloi.card_db.service;
 
 import com.cscloi.card_db.entity.Rules;
-import com.cscloi.card_db.entity.User;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface RulesService {
      * @param gameID ID of game who owns the rules.
      * @return Rules of the games.
      */
-    List<Rules> of_a_Game(String gameID);
+    Rules of_a_Game(String gameID);
 
     /**
      * Gets rules by it's unique identifier.

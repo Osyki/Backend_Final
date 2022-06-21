@@ -24,14 +24,14 @@ public class DefaultUserController implements UserController {
     }
 
     @Operation(summary = "Get all Users")
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public List<User> all() {
         List<User> users = service.all(MAX_ITEMS_PER_REQUEST);
         return users;
     }
 
     @Operation(summary = "Gets user by unique id")
-    @RequestMapping(value = "/user/{user_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{user_id}", method = RequestMethod.GET)
     public User get(@PathVariable String user_id) {
 
         User user = service.get(user_id);
@@ -44,7 +44,7 @@ public class DefaultUserController implements UserController {
 
 
     @Operation(summary = "Creates a new user")
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public User create(@RequestBody User user) {
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No user data provided.");
@@ -63,7 +63,7 @@ public class DefaultUserController implements UserController {
     }
 
     @Operation(summary = "Updates or modifies an existing user")
-    @RequestMapping(value = "/users/{user_id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update/{user_id}", method = RequestMethod.PUT)
     public User update(@PathVariable String user_id, @RequestBody User user) {
         if ((user_id == null) || (user_id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No User id provided.");
@@ -84,7 +84,7 @@ public class DefaultUserController implements UserController {
     }
 
     @Operation(summary = "Removes an existing user")
-    @RequestMapping(value = "/users/{user_id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{user_id}", method = RequestMethod.DELETE)
     public User delete(@PathVariable String user_id) {
         if ((user_id == null) || (user_id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No user id provided.");

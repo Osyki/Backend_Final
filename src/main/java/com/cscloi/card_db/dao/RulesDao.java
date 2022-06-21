@@ -1,3 +1,4 @@
+//Keith Geneva
 package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.Rules;
@@ -21,7 +22,7 @@ public interface RulesDao {
      * @param gameID ID of game who owns the rules.
      * @return Rules of the games.
      */
-    Optional<Rules> of_a_Game(String gameID);
+    Optional<Rules> get_of_a_game(String gameID);
 
     /**
      * Gets rules by it's unique identifier.
