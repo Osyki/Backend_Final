@@ -1,10 +1,19 @@
 package com.cscloi.card_db.service;
 
+import com.cscloi.card_db.dao.GamePieceDao;
 import com.cscloi.card_db.entity.GamePiece;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
+@Service
 public class DefaultGamePieceService implements GamePieceService{
+    @Autowired
+    private GamePieceDao gamePieceDao;
     /**
      * Returns all game pieces.
      * @param limit The maximum number of game pieces to return.
@@ -12,7 +21,7 @@ public class DefaultGamePieceService implements GamePieceService{
      */
     @Override
     public List<GamePiece> all(int limit) {
-        return null;
+        return gamePieceDao.all(limit);
     }
 
     /**
@@ -23,18 +32,31 @@ public class DefaultGamePieceService implements GamePieceService{
      */
     @Override
     public GamePiece get(String id) {
-        return null;
+        GamePiece rs =gamePieceDao.get(id);
+        if (rs.isValid()) {
+            return rs;
+        }
+
+        throw new NoSuchElementException("Game piece with primary key " + id + " not found.");
     }
 
     /**
      * Creates a new game piece.
      *
      * @param gamePiece The new game piece.
-     * @return The new game piece if successul, otherwise returns null.
+     * @return The new game piece if successful, otherwise returns null.
      */
     @Override
     public GamePiece create(GamePiece gamePiece) {
-        return null;
+        if (gamePiece == null) {
+            return null;
+        }
+
+        if (gamePiece.isValid()) {
+            return gamePieceDao.save(gamePiece);
+        }
+
+        throw new RuntimeException("Could not create new game piece.");
     }
 
     /**
@@ -45,8 +67,16 @@ public class DefaultGamePieceService implements GamePieceService{
      * @return The game piece if successful, otherwise returns null.
      */
     @Override
-    public GamePiece update(Long id, GamePiece gamePiece) {
-        return null;
+    public GamePiece update(String id, GamePiece gamePiece) {
+        if (id.isEmpty() || gamePiece == null) {
+            return null;
+        }
+
+        if (gamePiece.isValid()) {
+            return gamePieceDao.save(id,gamePiece);
+        }
+
+        throw new RuntimeException("Could not update game piece.");
     }
 
     /**
@@ -56,7 +86,15 @@ public class DefaultGamePieceService implements GamePieceService{
      * @return The removed game piece if successful, otherwise returns null.
      */
     @Override
-    public GamePiece delete(Long id) {
+    public GamePiece delete(String id) {
+        if (id.isEmpty()) {
+            return null;
+        }
+        GamePiece deleted = gamePieceDao.delete(id);
+        if (deleted.isValid()) {
+            return deleted;
+        }
+
         return null;
     }
 }
