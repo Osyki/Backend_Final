@@ -19,7 +19,7 @@ public interface GameDao {
      * Returns all games owned by a user
      *
      * @param limit   The maximum number of games to return.
-     * @param user_ID ID of user who owns the games.
+     * @param userID ID of user who owns the games.
      * @return A list of all the games.
      */
     Stream<Game> all_of_a_User(int limit, String userID);

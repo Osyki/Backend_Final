@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Expansion {
-    private Long expansion_pk;
     private String expansion_id;
     private Long game_fk;
     private String expansion_name;

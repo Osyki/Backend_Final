@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Card {
-    private Long card_pk;
     private String card_id;
     private Long expansion_fk;
     private String card_name;

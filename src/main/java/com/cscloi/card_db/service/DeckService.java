@@ -13,7 +13,7 @@ public interface DeckService {
      * @param limit The maximum number of decks to return.
      * @return A list of all the decks.
      */
-    List<Game> all(int limit);
+    List<Deck> all(int limit);
     /**
      * Returns all decks owned by a user.
      *

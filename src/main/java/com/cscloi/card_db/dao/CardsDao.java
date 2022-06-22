@@ -17,13 +17,12 @@ public interface CardsDao {
     Stream<Card> all(int limit);
 
     /**
-     * Returns all cards owned by a user.
+     * Returns all cards owned by a deck.
      *
-     * @param limit  The maximum number of decks to return.
      * @param deckID The user that owns the decks
-     * @return A list of all the users.
+     * @return A list of all cards in the deck.
      */
-    Stream<Card> all_for_a_deck(int limit, String deckID);
+    Stream<Card> all_for_a_deck(String deckID);
 
     /**
      * Gets a card by it's unique identifier.

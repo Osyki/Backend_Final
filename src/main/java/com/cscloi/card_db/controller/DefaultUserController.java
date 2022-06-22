@@ -5,6 +5,7 @@ import com.cscloi.card_db.entity.User;
 import com.cscloi.card_db.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,7 +17,7 @@ import java.util.List;
 public class DefaultUserController implements UserController {
     private final int MAX_ITEMS_PER_REQUEST = 500;
 
-    //@Autowired
+    @Autowired
     private UserService service;
 
     public DefaultUserController(UserService service) {

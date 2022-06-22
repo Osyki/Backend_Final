@@ -14,7 +14,7 @@ public interface DeckDao {
      * @param limit The maximum number of decks to return.
      * @return A list of all the decks.
      */
-    Stream<Game> all(int limit);
+    Stream<Deck> all(int limit);
     /**
      * Returns all decks owned by a user.
      *

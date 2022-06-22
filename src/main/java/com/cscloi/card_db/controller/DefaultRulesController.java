@@ -30,8 +30,8 @@ public class DefaultRulesController implements RulesController{
         return rules;
     }
 
-    @Operation(summary = "Gets rules for a game")
-    @RequestMapping(value = "/game/{game_id}", method = RequestMethod.GET)
+    @Operation(summary = "Gets rules by unique id")
+    @RequestMapping(value = "/{rules_id}", method = RequestMethod.GET)
     public Rules get(@PathVariable String rules_id) {
 
         Rules rules = service.get(rules_id);
@@ -43,7 +43,7 @@ public class DefaultRulesController implements RulesController{
     }
 
     @Operation(summary = "Gets rules by game id")
-    @RequestMapping(value = "/{rules_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/game/{game_id}", method = RequestMethod.GET)
     public Rules of_a_Game(@PathVariable String game_id) {
 
         Rules rules = service.of_a_Game(game_id);                                                                 //FIXME
