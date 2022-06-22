@@ -15,21 +15,22 @@ import java.util.List;
 @OpenAPIDefinition(info = @Info(title = "Game Piece Service"), servers = {@Server(url = "http://localhost:8080", description = "Local server.")})
 @Tag(name="GamePieces")
 public interface GamePieceController {
+    final int MAX_ITEMS = 500;
     @Operation(summary = "Get all game pieces.")
     @RequestMapping(value="/gamepieces", method = RequestMethod.GET)
     public List<GamePiece> all();
 
     @Operation(summary = "Get game pieces by game id.")
     @RequestMapping(value = "/games/{gameid}/gamepieces", method = RequestMethod.GET)
-    public List<GamePiece> all(@PathVariable String gameID);
+    public List<GamePiece> all(@PathVariable String gameid);
 
     @Operation(summary = "Gets a game piece by unique id")
     @RequestMapping(value = "/gamepieces/{id}", method = RequestMethod.GET)
-    public GamePiece get(@PathVariable Long id);
+    public GamePiece get(@PathVariable String id);
 
     @Operation(summary = "Creates a new game piece.")
     @RequestMapping(value = "/gamepieces", method = RequestMethod.POST)
-    public GamePiece create(@RequestBody GamePiece title);
+    public GamePiece create(@RequestBody GamePiece gamePiece);
 
     @Operation(summary = "Updates or modifies an existing game piece.")
     @RequestMapping(value = "/gamepieces/{id}", method = RequestMethod.PUT)
