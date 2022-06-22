@@ -32,12 +32,12 @@ public interface GamePieceService {
      * @param gamePiece The update game piece information.
      * @return The game piece if successful, otherwise returns null.
      */
-    GamePiece update(String id, GamePiece gamePiece);
+    GamePiece update(Long id, GamePiece gamePiece);
 
     /**
      * Deletes or removes a game piece.
      * @param id The unique id of the game piece to remove.
      * @return The removed game piece if successful, otherwise returns null.
      */
-    GamePiece delete(String id);
+    GamePiece delete(Long id);
 }
