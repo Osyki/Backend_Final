@@ -1,8 +1,7 @@
+//Keith Geneva
 package com.cscloi.card_db.service;
 
 import com.cscloi.card_db.entity.Deck;
-import com.cscloi.card_db.entity.Game;
-import com.cscloi.card_db.entity.User;
 
 import java.util.List;
 

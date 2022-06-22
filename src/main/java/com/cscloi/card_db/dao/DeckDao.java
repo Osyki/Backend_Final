@@ -1,7 +1,7 @@
+//Keith Geneva
 package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.Deck;
-import com.cscloi.card_db.entity.Game;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -15,6 +15,7 @@ public interface DeckDao {
      * @return A list of all the decks.
      */
     Stream<Deck> all(int limit);
+
     /**
      * Returns all decks owned by a user.
      *

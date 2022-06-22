@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Game {
-    private String game_id;
+    private String game_fk;
     private String game_name;
     private String creator_name;
 }

@@ -1,3 +1,4 @@
+//Keith Geneva
 package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.Deck;
@@ -33,9 +34,9 @@ public class DefaultDeckDao implements DeckDao {
         List<Deck> decks = provider.query(sql, new RowMapper<Deck>() {
             @Override
             public Deck mapRow(ResultSet rs, int rowNum) throws SQLException {
-                String deck_id = rs.getString("rules_id");
-                String deck_name = rs.getString("rule_text");
-                Long user_fk = rs.getLong("game_fk");
+                String deck_id = rs.getString("deck_id");
+                String deck_name = rs.getString("deck_name");
+                Long user_fk = rs.getLong("user_fk");
                 Deck model = new Deck(deck_id, user_fk, deck_name);
                 return model;
             }
@@ -49,17 +50,16 @@ public class DefaultDeckDao implements DeckDao {
         String sql = "SELECT deck_id, user_fk, deck_name " +
                 "FROM decks " +
                 "inner join users u on decks.user_fk = u.user_pk " +
-                "WHERE " +
-                " user_fk = :user_fk;";
+                "WHERE user_id = :user_id;";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("user_fk", userID);
+        parameters.addValue("user_id", userID);
 
-        List<Deck> decks = provider.query(sql, new RowMapper<Deck>() {
+        List<Deck> decks = provider.query(sql, parameters, new RowMapper<Deck>() {
             @Override
             public Deck mapRow(ResultSet rs, int rowNum) throws SQLException {
-                String deck_id = rs.getString("rules_id");
-                String deck_name = rs.getString("rule_text");
-                Long user_fk = rs.getLong("game_fk");
+                String deck_id = rs.getString("deck_id");
+                String deck_name = rs.getString("deck_name");
+                Long user_fk = rs.getLong("user_fk");
                 Deck model = new Deck(deck_id, user_fk, deck_name);
                 return model;
             }
@@ -70,7 +70,7 @@ public class DefaultDeckDao implements DeckDao {
 
     @Override
     public Optional<Deck> get(String deckID) {
-        String sql = "SELECT deck_id, user_fk, deck_name "
+        String sql = "SELECT deck_id, deck_name, user_fk "
                 + "FROM decks "
                 + "WHERE deck_id = :deck_id;";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -82,7 +82,6 @@ public class DefaultDeckDao implements DeckDao {
                 return new Deck(rs.getString("deck_id"),
                         rs.getLong("user_fk"),
                         rs.getString("deck_name"));
-
             }
         });
 
@@ -112,11 +111,11 @@ public class DefaultDeckDao implements DeckDao {
             String sql = null;
             if (existing.isEmpty()) {
                 sql = "INSERT INTO decks (deck_id, user_fk, deck_name) "
-                        + "VALUES (:deck_id,:user_fk, :deck_name);";
+                        + "VALUES (:deck_id,:user_fk,:deck_name);";
             } else {
-                sql = "UPDATE decks SET deck_id = :deck_id, " +
-                        "deck_name = :deck_name" +
-                        "user_fk =  :user_fk";
+                sql = "UPDATE decks SET user_fk = :user_fk, " +
+                        "deck_name = :deck_name " +
+                        "WHERE deck_id = :deck_id;";
             }
 
             // SQL

@@ -47,13 +47,12 @@ public class DefaultRulesDao implements RulesDao {
 
     @Override
     public Optional<Rules> get_of_a_game(String gameID) {
-        String sql = "SELECT rules_id, rule_text " +
+        String sql = "SELECT rules_id, rule_text, game_fk " +
                 "FROM rules " +
                 "inner join games on games.game_pk = rules.game_fk " +
-                "WHERE "
-                + " game_id = :game_id;";
+                "WHERE game_id = :game_id;";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("game_fk", gameID);
+        parameters.addValue("game_id", gameID);
 
         List<Rules> rules = provider.query(sql, parameters, new RowMapper<Rules>() {
             @Override
@@ -73,7 +72,7 @@ public class DefaultRulesDao implements RulesDao {
 
     @Override
     public Optional<Rules> get(String rulesID) {
-        String sql = "SELECT rules_id, rule_text "
+        String sql = "SELECT rules_id, rule_text, game_fk "
                 + "FROM rules "
                 + "WHERE rules_id = :rules_id;";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -114,12 +113,12 @@ public class DefaultRulesDao implements RulesDao {
             Optional<Rules> existing = get(rulesID);
             String sql = null;
             if (existing.isEmpty()) {
-                sql = "INSERT INTO rules (rules_id, rule_text, game_fk) "
-                        + "VALUES (:rules_id,:rule_text, :game_fk);";
+                sql = "INSERT INTO rules (rules_id,rule_text,game_fk) "
+                        + "VALUES (:rules_id,:rule_text,:game_fk);";
             } else {
-                sql = "UPDATE rules SET rules_id = :rules_id, " +
-                        "rule_text = :rule_text" +
-                        "game_fk =  :game_fk";
+                sql = "UPDATE rules SET rule_text = :rule_text, " +
+                        "game_fk = :game_fk " +
+                        "WHERE rules_id = :rules_id;";
             }
 
             // SQL

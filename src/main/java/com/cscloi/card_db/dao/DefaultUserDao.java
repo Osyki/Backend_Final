@@ -88,8 +88,8 @@ public class DefaultUserDao implements UserDao {
                 sql = "INSERT INTO users (user_id, user_name) "
                         + "VALUES (:user_id,:user_name);";
             } else {
-                sql = "UPDATE users SET user_id = :user_id, "
-                        + "user_name = :user_name";
+                sql = "UPDATE users SET user_name = :user_name " +
+                        "WHERE user_id = :user_id;";
             }
 
             // SQL
@@ -115,7 +115,7 @@ public class DefaultUserDao implements UserDao {
         Optional<User> existing = get(id);
         if (existing.isPresent()) {
             // DELETE
-            String sql = "DELETE FROM rules WHERE rules_id = :rules_id;";
+            String sql = "DELETE FROM users WHERE user_id = :user_id;";
             MapSqlParameterSource parameters = new MapSqlParameterSource();
             parameters.addValue("user_id", id);
 
