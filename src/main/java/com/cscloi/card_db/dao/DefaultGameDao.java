@@ -1,12 +1,21 @@
 package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.Game;
+import com.cscloi.card_db.entity.GamePiece;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Component;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
-//fixme
-
+@Component
 public class DefaultGameDao implements GameDao {
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
     /**
      * Returns all games.
      *
@@ -15,10 +24,25 @@ public class DefaultGameDao implements GameDao {
      */
     @Override
     public List<Game> all(int limit) {
-        return null;
+        String sql = ""
+                + "SELECT * "
+                + "FROM games "
+                + "LIMIT "
+                + limit;
+        return jdbcTemplate.query(sql, new RowMapper<Game>() {
+            @Override
+            public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return Game.builder()
+                        .game_pk(rs.getString("game_pk"))
+                        .game_id(rs.getString("game_id"))
+                        .game_name(rs.getString("game_name"))
+                        .creator_name(rs.getString("creator_name"))
+                        .build();
+            }
+        });
     }
 
-    /**
+    /** FIXME
      * Returns all games owned by a user
      *
      * @param limit  The maximum number of games to return.
@@ -38,7 +62,26 @@ public class DefaultGameDao implements GameDao {
      */
     @Override
     public Game get(String gameID) {
-        return null;
+        String sql = "SELECT * "
+                + "FROM games "
+                + "WHERE game_pk = :game_pk;";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("game_pk", gameID);
+
+        List<Game> games = jdbcTemplate.query(sql, params, new RowMapper<Game>() {
+            @Override
+            public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Game(rs.getString("game_pk"),
+                        rs.getString("game_id"),
+                        rs.getString("game_name"),
+                        rs.getString("creator_name"));
+            }
+        });
+
+        if (games.isEmpty()) {
+            return null;
+        }
+        return games.get(0);
     }
 
     /**
@@ -49,7 +92,12 @@ public class DefaultGameDao implements GameDao {
      */
     @Override
     public Game save(Game game) {
-        return null;
+        if (game == null) {
+            return null;
+        }
+
+        return save(game.getGame_pk(), game);
+
     }
 
     /**
@@ -61,7 +109,31 @@ public class DefaultGameDao implements GameDao {
      */
     @Override
     public Game save(String gameID, Game game) {
-        return null;
+        Game exists = get(gameID);
+        String sql;
+        if (exists == null) {
+            sql = "INSERT INTO games(game_pk,game_id,game_name,creator_name) " + "VALUES (:game_pk, :game_id, :game_name, :creator_name);";
+        } else {
+            sql = "UPDATE games SET game_pk = :game_pk, "
+                    + "game_id = :game_id, "
+                    + "game_name = :game_name, "
+                    + "creator_name = :creator_name "
+                    + "WHERE game_pk = :existing_game_pk;";
+        }
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("game_pk", game.getGame_pk());
+        params.addValue("game_id", game.getGame_id());
+        params.addValue("game_name", game.getGame_name());
+        params.addValue("creator_name",game.getCreator_name());
+        params.addValue("existing_game_pk", gameID);
+
+        int rows = jdbcTemplate.update(sql,params);
+        if (rows == 1) {
+            return game;
+        }
+
+        throw new RuntimeException("Could not save game piece to database.");
     }
 
     /**
@@ -72,6 +144,21 @@ public class DefaultGameDao implements GameDao {
      */
     @Override
     public Game delete(String gameID) {
-        return null;
+        if (gameID.isEmpty()) {
+            return null;
+        }
+        Game existing = get(gameID);
+        if (existing.isValid()) {
+            String sql = "DELETE FROM games WHERE game_pk = :game_pk;";
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("game_pk", gameID);
+
+            int rows =jdbcTemplate.update(sql, params);
+            if (rows == 1) {
+                return existing;
+            }
+        }
+
+        throw new RuntimeException("Could not delete game piece from database.");
     }
 }

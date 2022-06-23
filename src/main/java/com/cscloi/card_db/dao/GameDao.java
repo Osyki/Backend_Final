@@ -3,8 +3,6 @@ package com.cscloi.card_db.dao;
 import com.cscloi.card_db.entity.Game;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 public interface GameDao {
 
