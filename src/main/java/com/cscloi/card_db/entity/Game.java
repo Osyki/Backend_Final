@@ -10,12 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Game {
-    private Long game_pk;
+    private String game_pk;
     private String game_id;
     private String game_name;
     private String creator_name;
 
     public boolean isValid() {
-        return true;
+        if (getGame_pk() == null || getGame_pk().isEmpty()) {
+            return false;
+        }
+        return getGame_name() != null && !getGame_name().isEmpty();
     }
 }
