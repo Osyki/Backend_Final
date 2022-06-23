@@ -12,6 +12,8 @@ public interface GamePieceDao {
 
     GamePiece get(String id);
 
+    List<GamePiece> get(int limit, String gameID);
+
     GamePiece save(GamePiece gamePiece);
 
     GamePiece save(String gamePiecePK, GamePiece gamePiece);

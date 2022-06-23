@@ -25,10 +25,9 @@ public class DefaultGamePieceController implements GamePieceController {
         return gamePieceService.all(MAX_ITEMS);
     }
 
-    //FIXME: implement
     @Override
     public List<GamePiece> all(String gameID) {
-        return null;
+        return gamePieceService.all(MAX_ITEMS, gameID);
     }
 
     @Override

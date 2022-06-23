@@ -25,6 +25,18 @@ public class DefaultGamePieceService implements GamePieceService{
     }
 
     /**
+     * Returns all game pieces by specific game id.
+     *
+     * @param limit  The maximum number of game pieces to return.
+     * @param gameID The id to find game pieces for
+     * @return A list of all game pieces.
+     */
+    @Override
+    public List<GamePiece> all(int limit, String gameID) {
+        return gamePieceDao.get(limit, gameID);
+    }
+
+    /**
      * Gets a game piece by it's unique identifier.
      *
      * @param id The unique identifier.

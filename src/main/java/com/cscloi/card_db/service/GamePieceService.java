@@ -13,6 +13,13 @@ public interface GamePieceService {
     List<GamePiece> all(int limit);
 
     /**
+     * Returns all game pieces by specific game id.
+     * @param limit The maximum number of game pieces to return.
+     * @return A list of all game pieces.
+     */
+    List<GamePiece> all(int limit, String gameID);
+
+    /**
      * Gets a game piece by it's unique identifier.
      * @param id The unique identifier.
      * @return The game piece if found, otherwise returns null.

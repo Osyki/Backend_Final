@@ -42,7 +42,7 @@ public class DefaultGameDao implements GameDao {
         });
     }
 
-    /** FIXME
+    /**
      * Returns all games owned by a user
      *
      * @param limit  The maximum number of games to return.
@@ -51,7 +51,28 @@ public class DefaultGameDao implements GameDao {
      */
     @Override
     public List<Game> all_of_a_User(int limit, String userID) {
-        return null;
+        String sql = ""
+                + "SELECT game_pk, game_id, game_name, creator_name "
+                + "FROM userownedgames "
+                + "INNER JOIN users u on userownedgames.user_fk = u.user_pk "
+                + "INNER JOIN games g on userownedgames.game_fk = g.game_pk "
+                + "WHERE user_fk = :user_id "
+                + "LIMIT "
+                + limit;
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("user_id", userID);
+        return jdbcTemplate.query(sql, params, new RowMapper<Game>() {
+            @Override
+            public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return Game.builder()
+                        .game_pk(rs.getString("game_pk"))
+                        .game_id(rs.getString("game_id"))
+                        .game_name(rs.getString("game_name"))
+                        .creator_name(rs.getString("creator_name"))
+                        .build();
+            }
+        });
     }
 
     /**
