@@ -1,3 +1,9 @@
+/**
+ * @author Jonathan Rubio
+ * @version 1.0
+ * @since 2022-06-23
+ */
+
 package com.cscloi.card_db.entity;
 
 import lombok.AllArgsConstructor;

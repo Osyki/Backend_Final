@@ -1,8 +1,13 @@
+/**
+ * @author Jonathan Rubio
+ * @version 1.0
+ * @since 2022-06-23
+ */
+
 package com.cscloi.card_db.controller;
 
 
 import com.cscloi.card_db.entity.Game;
-import com.cscloi.card_db.entity.GamePiece;
 import com.cscloi.card_db.service.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +19,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class DefaultGameController implements GameController{
+public class DefaultGameController implements GameController {
 
     @Autowired
     private GameService gameService;

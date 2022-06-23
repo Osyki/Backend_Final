@@ -1,3 +1,9 @@
+/**
+ * @author Jonathan Rubio
+ * @version 1.0
+ * @since 2022-06-23
+ */
+
 package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.GamePiece;
@@ -12,7 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
-public class DefaultGamePieceDao implements GamePieceDao{
+public class DefaultGamePieceDao implements GamePieceDao {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -91,7 +97,7 @@ public class DefaultGamePieceDao implements GamePieceDao{
         if (gamePiece == null) {
             return null;
         }
-        
+
         return save(gamePiece.getGamePiecePK(), gamePiece);
 
     }
@@ -115,10 +121,10 @@ public class DefaultGamePieceDao implements GamePieceDao{
         params.addValue("game_piece_pk", gamePiece.getGamePiecePK());
         params.addValue("game_piece_name", gamePiece.getGamePieceName());
         params.addValue("game_piece_desc", gamePiece.getGamePieceDesc());
-        params.addValue("game_fk",gamePiece.getGamePieceFK());
+        params.addValue("game_fk", gamePiece.getGamePieceFK());
         params.addValue("existing_game_piece_pk", gamePiecePK);
 
-        int rows = jdbcTemplate.update(sql,params);
+        int rows = jdbcTemplate.update(sql, params);
         if (rows == 1) {
             return gamePiece;
         }
@@ -137,7 +143,7 @@ public class DefaultGamePieceDao implements GamePieceDao{
             MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("game_piece_pk", id);
 
-            int rows =jdbcTemplate.update(sql, params);
+            int rows = jdbcTemplate.update(sql, params);
             if (rows == 1) {
                 return existing;
             }

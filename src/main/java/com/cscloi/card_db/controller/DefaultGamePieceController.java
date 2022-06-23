@@ -1,14 +1,15 @@
+/**
+ * @author Jonathan Rubio
+ * @version 1.0
+ * @since 2022-06-23
+ */
+
 package com.cscloi.card_db.controller;
 
-import com.cscloi.card_db.dao.GamePieceDao;
-import com.cscloi.card_db.entity.Game;
 import com.cscloi.card_db.entity.GamePiece;
 import com.cscloi.card_db.service.GamePieceService;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 

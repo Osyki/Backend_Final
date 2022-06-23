@@ -1,3 +1,9 @@
+/**
+ * @author Jonathan Rubio
+ * @version 1.0
+ * @since 2022-06-23
+ */
+
 package com.cscloi.card_db.service;
 
 import com.cscloi.card_db.dao.GamePieceDao;
@@ -5,15 +11,14 @@ import com.cscloi.card_db.entity.GamePiece;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
-public class DefaultGamePieceService implements GamePieceService{
+public class DefaultGamePieceService implements GamePieceService {
     @Autowired
     private GamePieceDao gamePieceDao;
+
     /**
      * Returns all game pieces.
      * @param limit The maximum number of game pieces to return.
@@ -44,7 +49,7 @@ public class DefaultGamePieceService implements GamePieceService{
      */
     @Override
     public GamePiece get(String id) {
-        GamePiece rs =gamePieceDao.get(id);
+        GamePiece rs = gamePieceDao.get(id);
         if (rs.isValid()) {
             return rs;
         }
@@ -85,7 +90,7 @@ public class DefaultGamePieceService implements GamePieceService{
         }
 
         if (gamePiece.isValid()) {
-            return gamePieceDao.save(id,gamePiece);
+            return gamePieceDao.save(id, gamePiece);
         }
 
         throw new RuntimeException("Could not update game piece.");

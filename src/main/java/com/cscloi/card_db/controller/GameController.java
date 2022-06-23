@@ -1,3 +1,9 @@
+/**
+ * @author Jonathan Rubio
+ * @version 1.0
+ * @since 2022-06-23
+ */
+
 package com.cscloi.card_db.controller;
 
 import com.cscloi.card_db.entity.Game;
@@ -14,16 +20,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @OpenAPIDefinition(info = @Info(title = "Game Service"), servers = {@Server(url = "http://localhost:8080", description = "Local server.")})
-@Tag(name="Games")
+@Tag(name = "Games")
 public interface GameController {
     int MAX_ITEMS = 500;
 
     @Operation(summary = "Get all games.")
-    @RequestMapping(value="/games", method = RequestMethod.GET)
+    @RequestMapping(value = "/games", method = RequestMethod.GET)
     public List<Game> all();
 
     @Operation(summary = "Get all games from a specific userID.")
-    @RequestMapping(value="/users/{userid}/games", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{userid}/games", method = RequestMethod.GET)
     public List<Game> all(@PathVariable String userid);
 
     @Operation(summary = "Gets a game by unique id")

@@ -1,8 +1,12 @@
+/**
+ * @author Jonathan Rubio
+ * @version 1.0
+ * @since 2022-06-23
+ */
+
 package com.cscloi.card_db.controller;
 
-import com.cscloi.card_db.entity.Game;
 import com.cscloi.card_db.entity.GamePiece;
-import com.sun.source.doctree.SummaryTree;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -13,16 +17,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @OpenAPIDefinition(info = @Info(title = "Game Piece Service"), servers = {@Server(url = "http://localhost:8080", description = "Local server.")})
-@Tag(name="GamePieces")
+@Tag(name = "GamePieces")
 public interface GamePieceController {
     int MAX_ITEMS = 500;
 
     @Operation(summary = "Get all game pieces.")
-    @RequestMapping(value="/gamepieces", method = RequestMethod.GET)
+    @RequestMapping(value = "/gamepieces", method = RequestMethod.GET)
     public List<GamePiece> all();
 
     @Operation(summary = "Get game pieces by game id.")
-    @RequestMapping(value="/games/{gameID}/gamepieces", method = RequestMethod.GET)
+    @RequestMapping(value = "/games/{gameID}/gamepieces", method = RequestMethod.GET)
     public List<GamePiece> all(@PathVariable String gameID);
 
     @Operation(summary = "Gets a game piece by unique id")

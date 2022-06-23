@@ -1,7 +1,12 @@
+/**
+ * @author Jonathan Rubio
+ * @version 1.0
+ * @since 2022-06-23
+ */
+
 package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.Game;
-import com.cscloi.card_db.entity.GamePiece;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,6 +21,7 @@ import java.util.List;
 public class DefaultGameDao implements GameDao {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+
     /**
      * Returns all games.
      *
@@ -146,10 +152,10 @@ public class DefaultGameDao implements GameDao {
         params.addValue("game_pk", game.getGame_pk());
         params.addValue("game_id", game.getGame_id());
         params.addValue("game_name", game.getGame_name());
-        params.addValue("creator_name",game.getCreator_name());
+        params.addValue("creator_name", game.getCreator_name());
         params.addValue("existing_game_pk", gameID);
 
-        int rows = jdbcTemplate.update(sql,params);
+        int rows = jdbcTemplate.update(sql, params);
         if (rows == 1) {
             return game;
         }
@@ -174,7 +180,7 @@ public class DefaultGameDao implements GameDao {
             MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("game_pk", gameID);
 
-            int rows =jdbcTemplate.update(sql, params);
+            int rows = jdbcTemplate.update(sql, params);
             if (rows == 1) {
                 return existing;
             }

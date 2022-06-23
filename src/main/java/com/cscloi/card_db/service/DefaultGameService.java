@@ -1,3 +1,9 @@
+/**
+ * @author Jonathan Rubio
+ * @version 1.0
+ * @since 2022-06-23
+ */
+
 package com.cscloi.card_db.service;
 
 import com.cscloi.card_db.dao.GameDao;
@@ -10,7 +16,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class DefaultGameService implements GameService{
+public class DefaultGameService implements GameService {
 
     @Autowired
     private GameDao gameDao;
@@ -69,7 +75,7 @@ public class DefaultGameService implements GameService{
      */
     @Override
     public Game update(String gameID, Game input) {
-        return gameDao.save(gameID,input);
+        return gameDao.save(gameID, input);
     }
 
     /**
