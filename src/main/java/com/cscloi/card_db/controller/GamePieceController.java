@@ -15,7 +15,7 @@ import java.util.List;
 @OpenAPIDefinition(info = @Info(title = "Game Piece Service"), servers = {@Server(url = "http://localhost:8080", description = "Local server.")})
 @Tag(name="GamePieces")
 public interface GamePieceController {
-    final int MAX_ITEMS = 500;
+    int MAX_ITEMS = 500;
     @Operation(summary = "Get all game pieces.")
     @RequestMapping(value="/gamepieces", method = RequestMethod.GET)
     public List<GamePiece> all();
@@ -39,5 +39,4 @@ public interface GamePieceController {
     @Operation(summary = "Removes an existing game piece.")
     @RequestMapping(value = "/gamepieces/{id}", method = RequestMethod.DELETE)
     public GamePiece delete(@PathVariable String id);
-
 }
