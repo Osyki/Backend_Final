@@ -22,6 +22,10 @@ public interface GameController {
     @RequestMapping(value="/games", method = RequestMethod.GET)
     public List<Game> all();
 
+    @Operation(summary = "Get all games from a specific userID.")
+    @RequestMapping(value="/users/{userid}/games", method = RequestMethod.GET)
+    public List<Game> all(@PathVariable String userid);
+
     @Operation(summary = "Gets a game by unique id")
     @RequestMapping(value = "/games/{id}", method = RequestMethod.GET)
     public Game get(@PathVariable String id);
