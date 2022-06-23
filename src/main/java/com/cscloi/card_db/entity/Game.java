@@ -14,4 +14,8 @@ public class Game {
     private String game_id;
     private String game_name;
     private String creator_name;
+
+    public boolean isValid() {
+        return true;
+    }
 }
