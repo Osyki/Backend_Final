@@ -28,16 +28,17 @@ public class DefaultDeckDao implements DeckDao {
 
     @Override
     public Stream<Deck> all(int limit) {
-        String sql = "SELECT deck_id, user_fk, deck_name "
+        String sql = "SELECT deck_id, user_id, deck_name "
                 + "FROM decks "
-                + "LIMIT " + limit;
+                + "inner join users u on decks.user_fk = u.user_pk "
+                + "limit " + limit;
         List<Deck> decks = provider.query(sql, new RowMapper<Deck>() {
             @Override
             public Deck mapRow(ResultSet rs, int rowNum) throws SQLException {
                 String deck_id = rs.getString("deck_id");
                 String deck_name = rs.getString("deck_name");
-                Long user_fk = rs.getLong("user_fk");
-                Deck model = new Deck(deck_id, user_fk, deck_name);
+                String user_id = rs.getString("user_id");
+                Deck model = new Deck(deck_id, user_id, deck_name);
                 return model;
             }
         });
@@ -47,10 +48,10 @@ public class DefaultDeckDao implements DeckDao {
 
     @Override
     public Stream<Deck> all_for_a_user(int limit, String userID) {
-        String sql = "SELECT deck_id, user_fk, deck_name " +
-                "FROM decks " +
-                "inner join users u on decks.user_fk = u.user_pk " +
-                "WHERE user_id = :user_id;";
+        String sql = "SELECT deck_id, user_id, deck_name "
+                + "FROM decks "
+                + "inner join users u on decks.user_fk = u.user_pk "
+                + "WHERE user_id = :user_id;";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("user_id", userID);
 
@@ -59,8 +60,8 @@ public class DefaultDeckDao implements DeckDao {
             public Deck mapRow(ResultSet rs, int rowNum) throws SQLException {
                 String deck_id = rs.getString("deck_id");
                 String deck_name = rs.getString("deck_name");
-                Long user_fk = rs.getLong("user_fk");
-                Deck model = new Deck(deck_id, user_fk, deck_name);
+                String user_id = rs.getString("user_id");
+                Deck model = new Deck(deck_id, user_id, deck_name);
                 return model;
             }
         });
@@ -70,8 +71,9 @@ public class DefaultDeckDao implements DeckDao {
 
     @Override
     public Optional<Deck> get(String deckID) {
-        String sql = "SELECT deck_id, deck_name, user_fk "
+        String sql = "SELECT deck_id, user_id, deck_name "
                 + "FROM decks "
+                + "inner join users u on decks.user_fk = u.user_pk "
                 + "WHERE deck_id = :deck_id;";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("deck_id", deckID);
@@ -80,8 +82,9 @@ public class DefaultDeckDao implements DeckDao {
             @Override
             public Deck mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new Deck(rs.getString("deck_id"),
-                        rs.getLong("user_fk"),
+                        rs.getString("user_id"),
                         rs.getString("deck_name"));
+
             }
         });
 
@@ -111,18 +114,18 @@ public class DefaultDeckDao implements DeckDao {
             String sql = null;
             if (existing.isEmpty()) {
                 sql = "INSERT INTO decks (deck_id, user_fk, deck_name) "
-                        + "VALUES (:deck_id,:user_fk,:deck_name);";
+                        + "VALUES (:deck_id, :user_fk, :deck_name);";
             } else {
-                sql = "UPDATE decks SET user_fk = :user_fk, " +
-                        "deck_name = :deck_name " +
-                        "WHERE deck_id = :deck_id;";
+                sql = "UPDATE decks SET user_fk = :user_fk, "
+                        + "deck_name = :deck_name "
+                        + "WHERE deck_id = :deck_id;";
             }
 
             // SQL
             MapSqlParameterSource parameters = new MapSqlParameterSource();
             parameters.addValue("deck_id", input.getDeck_id());
             parameters.addValue("deck_name", input.getDeck_name());
-            parameters.addValue("user_fk", input.getUser_fk());
+            parameters.addValue("user_fk", get_fk(input.getUser_id()));
 
             int rows = provider.update(sql, parameters);
             if (rows == 1) {
@@ -153,5 +156,21 @@ public class DefaultDeckDao implements DeckDao {
         return Optional.empty();
     }
 
+    // Converts user_id to user_pk, Used by save function
+    private Long get_fk(String userID) {
+        String sql = "SELECT user_pk "
+                + "FROM users "
+                + "WHERE user_id = :user_id;";
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("user_id", userID);
+
+        List<Long> pk = provider.query(sql, parameters, new RowMapper<Long>() {
+            public Long mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return rs.getLong("user_pk");
+            }
+        });
+
+        return pk.get(0);
+    }
 
 }

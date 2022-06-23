@@ -64,7 +64,7 @@ public class DefaultUserController implements UserController {
     }
 
     @Operation(summary = "Updates or modifies an existing user")
-    @RequestMapping(value = "/update/{user_id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{user_id}", method = RequestMethod.PUT)
     public User update(@PathVariable String user_id, @RequestBody User user) {
         if ((user_id == null) || (user_id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No User id provided.");
@@ -85,7 +85,7 @@ public class DefaultUserController implements UserController {
     }
 
     @Operation(summary = "Removes an existing user")
-    @RequestMapping(value = "/delete/{user_id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{user_id}", method = RequestMethod.DELETE)
     public User delete(@PathVariable String user_id) {
         if ((user_id == null) || (user_id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No user id provided.");

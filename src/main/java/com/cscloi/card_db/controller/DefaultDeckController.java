@@ -72,7 +72,7 @@ public class DefaultDeckController implements DeckController {
     }
 
     @Operation(summary = "Updates or modifies an existing deck")
-    @RequestMapping(value = "/update/{deck_id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{deck_id}", method = RequestMethod.PUT)
     public Deck update(@PathVariable String deck_id, @RequestBody Deck deck) {
         if ((deck_id == null) || (deck_id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No deck id provided.");
@@ -93,7 +93,7 @@ public class DefaultDeckController implements DeckController {
     }
 
     @Operation(summary = "Removes an existing deck")
-    @RequestMapping(value = "/delete/{deck_id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{deck_id}", method = RequestMethod.DELETE)
     public Deck delete(@PathVariable String deck_id) {
         if ((deck_id == null) || (deck_id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No deck id provided.");

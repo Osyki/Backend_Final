@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Deck {
     private String deck_id;
-    private Long user_fk;
+    private String user_id;
     private String deck_name;
 
     public boolean isValid() {
@@ -22,7 +22,7 @@ public class Deck {
         if ((getDeck_name() == null) || (getDeck_name().isEmpty())) {
             return false;
         }
-        if (getUser_fk() == null) {
+        if (user_id == null) {
             return false;
         }
         return true;

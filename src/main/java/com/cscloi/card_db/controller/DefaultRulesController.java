@@ -75,7 +75,7 @@ public class DefaultRulesController implements RulesController{
     }
 
     @Operation(summary = "Updates or modifies existing rules")
-    @RequestMapping(value = "/update/{rules_id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{rules_id}", method = RequestMethod.PUT)
     public Rules update(@PathVariable String rules_id, @RequestBody Rules rules) {
         if ((rules_id == null) || (rules_id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No Rules id provided.");
@@ -96,7 +96,7 @@ public class DefaultRulesController implements RulesController{
     }
 
     @Operation(summary = "Removes an existing rules")
-    @RequestMapping(value = "/delete/{rules_id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{rules_id}", method = RequestMethod.DELETE)
     public Rules delete(@PathVariable String rules_id) {
         if ((rules_id == null) || (rules_id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No rules id provided.");

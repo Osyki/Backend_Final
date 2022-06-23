@@ -28,16 +28,17 @@ public class DefaultRulesDao implements RulesDao {
 
     @Override
     public Stream<Rules> all(int limit) {
-        String sql = "SELECT rules_id, rule_text, game_fk "
+        String sql = "SELECT rules_id, rule_text, game_id "
                 + "FROM rules "
-                + "LIMIT " + limit;
+                + "inner join games g on rules.game_fk = g.game_pk "
+                + "limit " + limit;
         List<Rules> rules = provider.query(sql, new RowMapper<Rules>() {
             @Override
             public Rules mapRow(ResultSet rs, int rowNum) throws SQLException {
                 String rules_id = rs.getString("rules_id");
                 String rule_text = rs.getString("rule_text");
-                Long game_id = rs.getLong("game_fk");
-                Rules model = new Rules(rules_id, rule_text, game_id);
+                String game_id = rs.getString("game_id");
+                Rules model = new Rules(rules_id, game_id, rule_text);
                 return model;
             }
         });
@@ -47,10 +48,10 @@ public class DefaultRulesDao implements RulesDao {
 
     @Override
     public Optional<Rules> get_of_a_game(String gameID) {
-        String sql = "SELECT rules_id, rule_text, game_fk " +
-                "FROM rules " +
-                "inner join games on games.game_pk = rules.game_fk " +
-                "WHERE game_id = :game_id;";
+        String sql = "SELECT rules_id, rule_text, game_id "
+                + "FROM rules "
+                + "inner join games on games.game_pk = rules.game_fk "
+                + "WHERE game_id = :game_id;";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("game_id", gameID);
 
@@ -58,8 +59,8 @@ public class DefaultRulesDao implements RulesDao {
             @Override
             public Rules mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new Rules(rs.getString("rules_id"),
-                        rs.getString("rule_text"),
-                        rs.getLong("game_fk"));
+                        rs.getString("game_id"),
+                        rs.getString("rule_text"));
             }
         });
 
@@ -72,8 +73,9 @@ public class DefaultRulesDao implements RulesDao {
 
     @Override
     public Optional<Rules> get(String rulesID) {
-        String sql = "SELECT rules_id, rule_text, game_fk "
+        String sql = "SELECT rules_id, rule_text, game_id "
                 + "FROM rules "
+                + "inner join games on games.game_pk = rules.game_fk "
                 + "WHERE rules_id = :rules_id;";
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("rules_id", rulesID);
@@ -82,8 +84,8 @@ public class DefaultRulesDao implements RulesDao {
             @Override
             public Rules mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new Rules(rs.getString("rules_id"),
-                        rs.getString("rule_text"),
-                        rs.getLong("game_fk"));
+                        rs.getString("game_id"),
+                        rs.getString("rule_text"));
 
             }
         });
@@ -116,16 +118,16 @@ public class DefaultRulesDao implements RulesDao {
                 sql = "INSERT INTO rules (rules_id,rule_text,game_fk) "
                         + "VALUES (:rules_id,:rule_text,:game_fk);";
             } else {
-                sql = "UPDATE rules SET rule_text = :rule_text, " +
-                        "game_fk = :game_fk " +
-                        "WHERE rules_id = :rules_id;";
+                sql = "UPDATE rules SET rule_text = :rule_text, "
+                        + "game_fk = :game_fk "
+                        + "WHERE rules_id = :rules_id;";
             }
 
             // SQL
             MapSqlParameterSource parameters = new MapSqlParameterSource();
             parameters.addValue("rules_id", input.getRules_id());
             parameters.addValue("rule_text", input.getRule_text());
-            parameters.addValue("game_fk", input.getGame_id());
+            parameters.addValue("game_fk", get_fk(input.getGame_id()));
 
             int rows = provider.update(sql, parameters);
             if (rows == 1) {
@@ -156,5 +158,21 @@ public class DefaultRulesDao implements RulesDao {
         return Optional.empty();
     }
 
+    // Converts game_id to game_pk, Used by save function
+    private Long get_fk(String gameID) {
+        String sql = "SELECT game_pk "
+                + "FROM games "
+                + "WHERE game_id = :game_id;";
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("game_id", gameID);
+
+        List<Long> pk = provider.query(sql, parameters, new RowMapper<Long>() {
+            public Long mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return rs.getLong("game_pk");
+            }
+        });
+
+        return pk.get(0);
+    }
 
 }
