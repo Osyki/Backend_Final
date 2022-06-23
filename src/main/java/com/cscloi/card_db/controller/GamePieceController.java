@@ -16,13 +16,14 @@ import java.util.List;
 @Tag(name="GamePieces")
 public interface GamePieceController {
     int MAX_ITEMS = 500;
+
     @Operation(summary = "Get all game pieces.")
     @RequestMapping(value="/gamepieces", method = RequestMethod.GET)
     public List<GamePiece> all();
 
     @Operation(summary = "Get game pieces by game id.")
-    @RequestMapping(value = "/games/{gameid}/gamepieces", method = RequestMethod.GET)
-    public List<GamePiece> all(@PathVariable String gameid);
+    @RequestMapping(value="/games/{gameID}/gamepieces", method = RequestMethod.GET)
+    public List<GamePiece> all(@PathVariable String gameID);
 
     @Operation(summary = "Gets a game piece by unique id")
     @RequestMapping(value = "/gamepieces/{id}", method = RequestMethod.GET)

@@ -22,7 +22,7 @@ public class DefaultGamePieceDao implements GamePieceDao{
                 + "SELECT * "
                 + "FROM gamepieces "
                 + "LIMIT "
-                + limit;
+                + limit + ";";
         return jdbcTemplate.query(sql, new RowMapper<GamePiece>() {
             @Override
             public GamePiece mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -58,6 +58,32 @@ public class DefaultGamePieceDao implements GamePieceDao{
             return null;
         }
         return gamePieces.get(0);
+    }
+
+    @Override
+    public List<GamePiece> get(int limit, String gameID) {
+        String sql = "SELECT * "
+                + "FROM gamepieces "
+                + "INNER JOIN games g ON gamepieces.game_fk = g.game_pk "
+                + "WHERE game_pk = :game_pk "
+                + "LIMIT " + limit + ";";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("game_pk", gameID);
+
+        List<GamePiece> gamePieces = jdbcTemplate.query(sql, params, new RowMapper<GamePiece>() {
+            @Override
+            public GamePiece mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new GamePiece(rs.getString("game_piece_pk"),
+                        rs.getString("game_piece_name"),
+                        rs.getString("game_piece_desc"),
+                        rs.getString("game_fk"));
+            }
+        });
+
+        if (gamePieces.isEmpty()) {
+            return null;
+        }
+        return gamePieces;
     }
 
     @Override
