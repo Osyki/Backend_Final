@@ -2,6 +2,7 @@ package com.cscloi.card_db.controller;
 
 
 import com.cscloi.card_db.entity.Game;
+import com.cscloi.card_db.entity.GamePiece;
 import com.cscloi.card_db.service.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,6 @@ public class DefaultGameController implements GameController{
     @Override
     public List<Game> all() {
         return gameService.all(MAX_ITEMS);
-    }
-
-    @Override
-    public List<Game> all(String userid) {
-        return gameService.all_of_a_User(MAX_ITEMS, userid);
     }
 
     @Override
