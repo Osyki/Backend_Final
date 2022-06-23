@@ -25,6 +25,11 @@ public class DefaultGameController implements GameController{
     }
 
     @Override
+    public List<Game> all(String userid) {
+        return gameService.all_of_a_User(MAX_ITEMS, userid);
+    }
+
+    @Override
     public Game get(String id) {
         return gameService.get(id);
     }
