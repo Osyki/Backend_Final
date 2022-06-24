@@ -6,7 +6,6 @@
 
 package com.cscloi.card_db.controller;
 
-
 import com.cscloi.card_db.entity.Game;
 import com.cscloi.card_db.service.GameService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,19 +29,19 @@ public class DefaultGameController implements GameController {
     }
 
     @Override
-    public List<Game> all(String userid) {
-        return gameService.all_of_a_User(MAX_ITEMS, userid);
+    public List<Game> all(String user_id) {
+        return gameService.all_of_a_User(MAX_ITEMS, user_id);
     }
 
     @Override
-    public Game get(String id) {
-        return gameService.get(id);
+    public Game get(String game_id) {
+        return gameService.get(game_id);
     }
 
     @Override
     public Game create(Game game) {
         if (game == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game piece provided.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game provided.");
         }
 
         if (game.isValid()) {
@@ -51,43 +50,43 @@ public class DefaultGameController implements GameController {
                 return result;
             }
 
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data persistence failed. Game piece not saved.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data persistence failed. Game not saved.");
         }
 
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid game piece data specified.");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid game data specified.");
     }
 
     @Override
-    public Game update(String id, Game game) {
-        if ((id == null) || (id.isEmpty())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game piece id provided.");
+    public Game update(String game_id, Game game) {
+        if ((game_id == null) || (game_id.isEmpty())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game id provided.");
         }
         if (game == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game piece data provided.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game data provided.");
         }
 
         if (game.isValid()) {
-            Game result = gameService.update(id, game);
+            Game result = gameService.update(game_id, game);
             if (result != null) {
                 return result;
             }
 
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data persistence failed. Title not saved.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data persistence failed. Game not saved.");
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid game piece data specified.");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid game data specified.");
     }
 
     @Override
-    public Game delete(String id) {
-        if ((id == null) || (id.isEmpty())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game piece id provided.");
+    public Game delete(String game_id) {
+        if ((game_id == null) || (game_id.isEmpty())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game id provided.");
         }
 
-        Game result = gameService.delete(id);
+        Game result = gameService.delete(game_id);
         if (result != null) {
             return result;
         }
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game piece with requested id was not found");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game with requested id was not found");
     }
 }
