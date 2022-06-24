@@ -15,16 +15,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Game {
-    private String game_pk;
-    private String game_id;
-    private String game_name;
-    private String creator_name;
+public class GamePiece {
+    private String gamePiecePK;
+    private String gamePieceName;
+    private String gamePieceDesc;
+    private String gamePieceFK;
 
     public boolean isValid() {
-        if (getGame_pk() == null || getGame_pk().isEmpty()) {
+        if (getGamePiecePK() == null || getGamePiecePK().isEmpty()) {
             return false;
         }
-        return getGame_name() != null && !getGame_name().isEmpty();
+        return getGamePieceName() != null && !getGamePieceName().isEmpty();
     }
 }

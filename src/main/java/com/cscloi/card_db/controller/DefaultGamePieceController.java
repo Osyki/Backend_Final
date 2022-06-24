@@ -6,10 +6,8 @@
 
 package com.cscloi.card_db.controller;
 
-
-import com.cscloi.card_db.entity.Game;
-import com.cscloi.card_db.service.GameService;
-import lombok.extern.slf4j.Slf4j;
+import com.cscloi.card_db.entity.GamePiece;
+import com.cscloi.card_db.service.GamePieceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,35 +16,34 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@Slf4j
-public class DefaultGameController implements GameController {
+public class DefaultGamePieceController implements GamePieceController {
 
     @Autowired
-    private GameService gameService;
+    private GamePieceService gamePieceService;
 
     @Override
-    public List<Game> all() {
-        return gameService.all(MAX_ITEMS);
+    public List<GamePiece> all() {
+        return gamePieceService.all(MAX_ITEMS);
     }
 
     @Override
-    public List<Game> all(String userid) {
-        return gameService.all_of_a_User(MAX_ITEMS, userid);
+    public List<GamePiece> all(String gameID) {
+        return gamePieceService.all(MAX_ITEMS, gameID);
     }
 
     @Override
-    public Game get(String id) {
-        return gameService.get(id);
+    public GamePiece get(String id) {
+        return gamePieceService.get(id);
     }
 
     @Override
-    public Game create(Game game) {
-        if (game == null) {
+    public GamePiece create(GamePiece gamePiece) {
+        if (gamePiece == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game piece provided.");
         }
 
-        if (game.isValid()) {
-            Game result = gameService.create(game);
+        if (gamePiece.isValid()) {
+            GamePiece result = gamePieceService.create(gamePiece);
             if (result != null) {
                 return result;
             }
@@ -58,16 +55,16 @@ public class DefaultGameController implements GameController {
     }
 
     @Override
-    public Game update(String id, Game game) {
+    public GamePiece update(String id, GamePiece gamePiece) {
         if ((id == null) || (id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game piece id provided.");
         }
-        if (game == null) {
+        if (gamePiece == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game piece data provided.");
         }
 
-        if (game.isValid()) {
-            Game result = gameService.update(id, game);
+        if (gamePiece.isValid()) {
+            GamePiece result = gamePieceService.update(id, gamePiece);
             if (result != null) {
                 return result;
             }
@@ -78,12 +75,12 @@ public class DefaultGameController implements GameController {
     }
 
     @Override
-    public Game delete(String id) {
+    public GamePiece delete(String id) {
         if ((id == null) || (id.isEmpty())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No game piece id provided.");
         }
 
-        Game result = gameService.delete(id);
+        GamePiece result = gamePieceService.delete(id);
         if (result != null) {
             return result;
         }
