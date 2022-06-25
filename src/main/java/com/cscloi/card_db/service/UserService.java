@@ -1,4 +1,6 @@
 //Keith Geneva
+//Jonathan Rubio
+//Bishoy Soliman Hanna
 package com.cscloi.card_db.service;
 
 import com.cscloi.card_db.entity.User;
