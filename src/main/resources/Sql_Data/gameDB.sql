@@ -26,7 +26,7 @@ CREATE TABLE expansions (
   game_fk int unsigned NOT NULL,
   expansion_name varchar(45) NOT NULL,
   PRIMARY KEY (expansion_pk),
-  FOREIGN KEY (game_fk) REFERENCES games (game_pk)
+  FOREIGN KEY (game_fk) REFERENCES games (game_pk) ON DELETE CASCADE
 );
 
 CREATE TABLE rules (
@@ -44,7 +44,7 @@ CREATE TABLE cards (
   expansion_fk int unsigned NOT NULL,
   card_name varchar(45) NOT NULL,
   PRIMARY KEY (card_pk),
-  FOREIGN KEY (expansion_fk) REFERENCES expansions (expansion_pk)
+  FOREIGN KEY (expansion_fk) REFERENCES expansions (expansion_pk) ON DELETE CASCADE
 );
 
 CREATE TABLE users (
