@@ -1,9 +1,13 @@
+////////////// done by Bishoy SOliman Hanna ///////////////////
+
 package com.cscloi.card_db.service;
 
+import com.cscloi.card_db.entity.Card;
 import com.cscloi.card_db.entity.Deck;
 import com.cscloi.card_db.entity.Game;
 import com.cscloi.card_db.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -15,16 +19,16 @@ public interface CardsService {
      * @param limit The maximum number of cards to return.
      * @return A list of all the cards.
      */
-    Stream<Game> all(int limit);
+    List<Card> all(int limit);
 
     /**
      * Returns all cards owned by a user.
      *
-     * @param limit  The maximum number of decks to return.
+
      * @param deckID The user that owns the decks
      * @return A list of all the users.
      */
-    Stream<Deck> all_for_a_user(int limit, String deckID);
+    List<Card> all_for_a_user(String deckID);
 
     /**
      * Gets a card by it's unique identifier.
@@ -32,7 +36,7 @@ public interface CardsService {
      * @param cardID The unique identifier
      * @return The card if found, otherwise returns null.
      */
-    Optional<Deck> get(String cardID);
+    Card get(String cardID);
 
     /**
      * Creates a new card.
@@ -40,7 +44,7 @@ public interface CardsService {
      * @param input The new card.
      * @return The new card if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> create(Deck input);
+    Card create(Card input);
 
     /**
      * Updates a card.
@@ -49,7 +53,7 @@ public interface CardsService {
      * @param input  The updated card.
      * @return The updated card if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> update(String cardID, Deck input);
+    Card update(String cardID, Card input);
 
     /**
      * Deletes or removes a card.
@@ -57,6 +61,6 @@ public interface CardsService {
      * @param cardID The unique id of the card to remove.
      * @return The removed card if successful, otherwise returns an empty optional.
      */
-    Optional<Deck> delete(String cardID);
+    Card delete(String cardID);
 }
 

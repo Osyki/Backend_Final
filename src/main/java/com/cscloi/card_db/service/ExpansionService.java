@@ -1,3 +1,5 @@
+////////////// done by Bishoy SOliman Hanna ///////////////////
+
 package com.cscloi.card_db.service;
 
 import com.cscloi.card_db.entity.Expansion;
@@ -18,10 +20,9 @@ public interface ExpansionService {
     /**
      * Returns all expansions for a game.
      *
-     * @param limit The maximum number of expansions to return. gameID The game that owns the decks
      * @return A list of all the expansions.
      */
-    List<Expansion> all_of_a_Game(int limit, String gameID);
+    List<Expansion> all_of_a_Game( String gameID);
 
     /**
      * Gets a expansion by it's unique identifier.

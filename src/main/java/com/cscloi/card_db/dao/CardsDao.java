@@ -1,7 +1,10 @@
+////////////// done by Bishoy SOliman Hanna ///////////////////
+
 package com.cscloi.card_db.dao;
 
 import com.cscloi.card_db.entity.Card;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -14,15 +17,15 @@ public interface CardsDao {
      * @param limit The maximum number of cards to return.
      * @return A list of all the cards.
      */
-    Stream<Card> all(int limit);
+    List<Card> all(int limit);
 
     /**
-     * Returns all cards owned by a deck.
+     * Returns all cards owned by a user.
      *
      * @param deckID The user that owns the decks
-     * @return A list of all cards in the deck.
+     * @return A list of all the users.
      */
-    Stream<Card> all_for_a_deck(String deckID);
+    List<Card> all_for_a_deck(String deckID);
 
     /**
      * Gets a card by it's unique identifier.
@@ -30,7 +33,7 @@ public interface CardsDao {
      * @param cardID The unique identifier
      * @return The card if found, otherwise returns null.
      */
-    Optional<Card> get(String cardID);
+    Card get(String cardID);
 
     /**
      * Creates a new card.
@@ -38,7 +41,7 @@ public interface CardsDao {
      * @param input The new card.
      * @return The new card if successful, otherwise returns an empty optional.
      */
-    Optional<Card> save(Card input);
+    Card save(Card input);
 
     /**
      * Creates a new card.
@@ -47,7 +50,7 @@ public interface CardsDao {
      * @param input  The new card.
      * @return The new card if successful, otherwise returns an empty optional.
      */
-    Optional<Card> save(String cardID, Card input);
+    Card save(String cardID, Card input);
 
     /**
      * Deletes or removes a card.
@@ -55,5 +58,5 @@ public interface CardsDao {
      * @param cardID The unique id of the card to remove.
      * @return The removed card if successful, otherwise returns an empty optional.
      */
-    Optional<Card> delete(String cardID);
+    Card delete(String cardID);
 }
