@@ -60,7 +60,7 @@ CREATE TABLE decks (
   user_fk int unsigned NOT NULL,
   deck_name varchar(45) NOT NULL,
   PRIMARY KEY (deck_pk),
-  FOREIGN KEY (user_fk) REFERENCES users (user_pk) 
+  FOREIGN KEY (user_fk) REFERENCES users (user_pk) ON DELETE CASCADE
 );
 
 CREATE TABLE cardsInDecks (
@@ -77,8 +77,8 @@ CREATE TABLE userOwnedGames (
   user_fk int unsigned NOT NULL,
   game_fk int unsigned NOT NULL,
   PRIMARY KEY (userOwnedGames_pk),
-  FOREIGN KEY (user_fk) REFERENCES users (user_pk),
-  FOREIGN KEY (game_fk) REFERENCES games (game_pk)
+  FOREIGN KEY (user_fk) REFERENCES users (user_pk) ON DELETE CASCADE,
+  FOREIGN KEY (game_fk) REFERENCES games (game_pk) ON DELETE CASCADE
 );
 
 CREATE TABLE gamepieces (
@@ -86,5 +86,5 @@ CREATE TABLE gamepieces (
   game_piece_name varchar(40) NOT NULL,
   game_piece_desc TEXT,
   game_fk int unsigned NOT NULL,
-  FOREIGN KEY (game_fk) REFERENCES games(game_pk)
+  FOREIGN KEY (game_fk) REFERENCES games(game_pk) ON DELETE CASCADE
 );
